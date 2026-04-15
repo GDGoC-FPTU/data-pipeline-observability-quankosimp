@@ -6,26 +6,26 @@
 
 ---
 
-## 1. Ket qua thi nghiem
+## 1. Kết quả thí nghiệm
 
 | Scenario | Agent Response | Accuracy (1-10) | Notes |
 |----------|----------------|-----------------|-------|
-| Clean Data (`processed_data.csv`) | Agent: Based on my data, the best choice is Laptop at $1200. | 9 | Du lieu sau ETL giu lai record hop le, category duoc chuan hoa, gia tri price hop ly nen agent chon dung san pham electronics co gia cao nhat trong tap du lieu sach. |
-| Garbage Data (`garbage_data.csv`) | Agent: Based on my data, the best choice is Nuclear Reactor at $999999. | 2 | Agent bi "danh lua" boi outlier gia tri qua lon, khong co co che xu ly anomaly/validation truoc khi suy luan nen dua ra ket qua phi thuc te. |
+| Clean Data (`processed_data.csv`) | Agent: Based on my data, the best choice is Laptop at $1200. | 9 | Dữ liệu sau ETL giữ lại record hợp lệ, category được chuẩn hóa, giá trị price hợp lý nên agent chọn đúng sản phẩm electronics có giá cao nhất trong tập dữ liệu sạch. |
+| Garbage Data (`garbage_data.csv`) | Agent: Based on my data, the best choice is Nuclear Reactor at $999999. | 2 | Agent bị "đánh lừa" bởi outlier giá trị quá lớn, không có cơ chế xử lý anomaly/validation trước khi suy luận nên đưa ra kết quả phi thực tế. |
 
 
 ---
 
-## 2. Phan tich & nhan xet
+## 2. Phân tích & nhận xét
 
-### Tai sao Agent tra loi sai khi dung Garbage Data?
+### Tại sao Agent trả lời sai khi dùng Garbage Data?
 
-Agent tra loi sai vi du lieu rac lam huong suy luan don gian cua agent. Thu nhat, co outlier "Nuclear Reactor" voi price = 999999 trong category electronics, nen khi agent lay gia cao nhat thi record nay luon thang va che lap cac san pham hop ly nhu Laptop. Thu hai, co duplicate id (id=1 xuat hien 2 lan) lam giam do tin cay cua tap du lieu. Thu ba, co wrong data type ("ten dollars") co the gay loi tinh toan hoac lam sai ket qua thong ke neu pipeline xu ly so hoc. Cuoi cung, null/missing values (id rong, category rong, price = 0) cho thay du lieu khong duoc validation chat che. Tong hop lai, agent khong sai ve mat code truy van, nhung sai do "garbage in, garbage out": dau vao kem chat luong dan den dau ra phi thuc te.
+Agent trả lời sai vì dữ liệu rác làm hỏng hướng suy luận đơn giản của agent. Thứ nhất, có outlier "Nuclear Reactor" với price = 999999 trong category electronics, nên khi agent lấy giá cao nhất thì record này luôn thắng và che lấp các sản phẩm hợp lý như Laptop. Thứ hai, có duplicate id (id=1 xuất hiện 2 lần) làm giảm độ tin cậy của tập dữ liệu. Thứ ba, có wrong data type ("ten dollars") có thể gây lỗi tính toán hoặc làm sai kết quả thống kê nếu pipeline xử lý số học. Cuối cùng, null/missing values (id rỗng, category rỗng, price = 0) cho thấy dữ liệu không được validation chặt chẽ. Tổng hợp lại, agent không sai về mặt code truy vấn, nhưng sai do "garbage in, garbage out": đầu vào kém chất lượng dẫn đến đầu ra phi thực tế.
 
 ---
 
-## 3. Ket luan
+## 3. Kết luận
 
-**Quality Data > Quality Prompt?** (Dong y hay khong? Giai thich ngan gon.)
+**Quality Data > Quality Prompt?** (Đồng ý hay không? Giải thích ngắn gọn.)
 
-Dong y. Prompt tot chi giup agent dien dat hoac suy luan tren nhung gi no "nhin thay"; neu du lieu nen bi nhiem outlier, sai kieu, trung lap, thieu truong quan trong thi cau tra loi van sai. Trong thi nghiem nay, cung mot prompt nhung clean data cho ket qua hop ly (Laptop $1200), con garbage data day agent den ket luan vo ly (Nuclear Reactor $999999). Vi vay, dam bao data quality la dieu kien tien quyet truoc khi toi uu prompt.
+Đồng ý. Prompt tốt chỉ giúp agent diễn đạt hoặc suy luận trên những gì nó "nhìn thấy"; nếu dữ liệu nền bị nhiễm outlier, sai kiểu, trùng lặp, thiếu trường quan trọng thì câu trả lời vẫn sai. Trong thí nghiệm này, cùng một prompt nhưng clean data cho kết quả hợp lý (Laptop $1200), còn garbage data đẩy agent đến kết luận vô lý (Nuclear Reactor $999999). Vì vậy, đảm bảo data quality là điều kiện tiên quyết trước khi tối ưu prompt.

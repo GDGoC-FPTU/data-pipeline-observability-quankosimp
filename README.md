@@ -7,32 +7,32 @@
 
 ---
 
-## Mo ta
+## Mô tả
 
-Bai lab xay dung ETL pipeline co 4 buoc Extract - Validate - Transform - Load cho du lieu san pham.
-Trong bai lam, toi da:
-- Doc du lieu tu `raw_data.json`
-- Loai bo record khong hop le (price <= 0 hoac category rong)
-- Chuan hoa category ve Title Case, tinh `discounted_price` giam 10%, them `processed_at`
-- Luu ket qua ra `processed_data.csv`
+Bài lab xây dựng ETL pipeline có 4 bước Extract - Validate - Transform - Load cho dữ liệu sản phẩm.
+Trong bài làm, tôi đã:
+- Đọc dữ liệu từ `raw_data.json`
+- Loại bỏ record không hợp lệ (`price <= 0` hoặc `category` rỗng)
+- Chuẩn hóa `category` về Title Case, tính `discounted_price` giảm 10%, thêm `processed_at`
+- Lưu kết quả ra `processed_data.csv`
 
-Ngoai ra, toi thuc hien stress test voi agent mo phong de so sanh tac dong cua clean data va garbage data, sau do tong hop nhan xet trong `experiment_report.md`.
+Ngoài ra, tôi thực hiện stress test với agent mô phỏng để so sánh tác động của clean data và garbage data, sau đó tổng hợp nhận xét trong `experiment_report.md`.
 
 ---
 
-## Cach chay (How to Run)
+## Cách chạy (How to Run)
 
 ### Prerequisites
 ```bash
 pip install pandas
 ```
 
-### Chay ETL Pipeline
+### Chạy ETL Pipeline
 ```bash
 python solution.py
 ```
 
-### Chay Agent Simulation (Stress Test)
+### Chạy Agent Simulation (Stress Test)
 ```bash
 python generate_garbage.py
 python agent_simulation.py
@@ -40,22 +40,22 @@ python agent_simulation.py
 
 ---
 
-## Cau truc thu muc
+## Cấu trúc thư mục
 
 ```
 ├── solution.py              # ETL Pipeline script
-├── processed_data.csv       # Output cua pipeline
-├── experiment_report.md     # Bao cao thi nghiem
-└── README.md                # File nay
+├── processed_data.csv       # Output của pipeline
+├── experiment_report.md     # Báo cáo thí nghiệm
+└── README.md                # File này
 ```
 
 ---
 
-## Ket qua
+## Kết quả
 
-- ETL tu `raw_data.json`: tong 5 records
+- ETL từ `raw_data.json`: tổng 5 records
 - Sau validation: 3 valid, 2 dropped
-- Output `processed_data.csv`: 3 records da duoc transform day du
+- Output `processed_data.csv`: 3 records đã được transform đầy đủ
 - Stress test agent:
-  - Clean data: Agent chon `Laptop` gia `$1200` (hop ly)
-  - Garbage data: Agent chon `Nuclear Reactor` gia `$999999` (bi outlier chi phoi)
+  - Clean data: Agent chọn `Laptop` giá `$1200` (hợp lý)
+  - Garbage data: Agent chọn `Nuclear Reactor` giá `$999999` (bị outlier chi phối)
