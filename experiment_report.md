@@ -16,9 +16,9 @@
 
 ---
 
-## 2. Phân tích & nhận xét
+## 2. Phan tich & nhan xet
 
-### Tại sao Agent trả lời sai khi dùng Garbage Data?
+### Tai sao Agent tra loi sai khi dung Garbage Data?
 
 Agent trả lời sai vì dữ liệu rác làm hỏng hướng suy luận đơn giản của agent. Thứ nhất, có outlier "Nuclear Reactor" với price = 999999 trong category electronics, nên khi agent lấy giá cao nhất thì record này luôn thắng và che lấp các sản phẩm hợp lý như Laptop. Thứ hai, có duplicate id (id=1 xuất hiện 2 lần) làm giảm độ tin cậy của tập dữ liệu. Thứ ba, có wrong data type ("ten dollars") có thể gây lỗi tính toán hoặc làm sai kết quả thống kê nếu pipeline xử lý số học. Cuối cùng, null/missing values (id rỗng, category rỗng, price = 0) cho thấy dữ liệu không được validation chặt chẽ. Tổng hợp lại, agent không sai về mặt code truy vấn, nhưng sai do "garbage in, garbage out": đầu vào kém chất lượng dẫn đến đầu ra phi thực tế.
 
